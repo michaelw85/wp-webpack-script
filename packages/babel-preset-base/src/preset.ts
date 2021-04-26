@@ -7,6 +7,7 @@ export interface PresetOptions {
 	noJsonStrings?: boolean;
 	noRuntime?: boolean;
 	hasReact?: boolean;
+	hasVueJS?: boolean;
 	useReactJsxRuntime?: boolean;
 	presetEnv?: {};
 	presetReact?: {};

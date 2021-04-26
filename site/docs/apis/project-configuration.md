@@ -70,6 +70,8 @@ module.exports = {
 	// Project specific config
 	// Needs react?
 	hasReact: true,
+	// Needs VueJS?
+	hasVueJS: false,
 	// Whether or not to use the new jsx runtime introduced in React 17
 	// this is opt-in
 	// @see {https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html}
@@ -147,13 +149,13 @@ A configuration object for banner put above all minified code.
 
 It has the following properties:
 
--   `name` (`string`): Name of application.
--   `author` (`string`): Author of application.
--   `version` (`string`): Version of application.
--   `link` (`string`): Homepage link of application.
--   `license` (`string`): License of application.
--   `copyrightText` (`string`): Additional copyright text.
--   `credit` (`boolean`): Whether to give wpackio a little credit ❤️.
+- `name` (`string`): Name of application.
+- `author` (`string`): Author of application.
+- `version` (`string`): Version of application.
+- `link` (`string`): Homepage link of application.
+- `license` (`string`): License of application.
+- `copyrightText` (`string`): Additional copyright text.
+- `credit` (`boolean`): Whether to give wpackio a little credit ❤️.
 
 ## `files` (`Array`)
 
@@ -307,6 +309,10 @@ You can not pass `rel/path/to/dist` here.
 ## `hasReact` (`boolean`):
 
 Where you need support for react specific presets, like `jsx`.
+
+## `hasVueJS` (`boolean`):
+
+Enable if you would like to use Vue JS components.
 
 ## `useReactJsxRuntime` (`boolean`):
 

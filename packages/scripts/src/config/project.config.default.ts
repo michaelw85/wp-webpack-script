@@ -77,6 +77,7 @@ export interface ProjectConfig {
 	 */
 	outputPath: string;
 	hasReact: boolean;
+	hasVueJS: boolean;
 	disableReactRefresh?: boolean;
 	hasSass: boolean;
 	useReactJsxRuntime?: boolean;
@@ -143,6 +144,8 @@ export const projectConfigDefault: ProjectConfig = {
 	useBabelConfig: false,
 	// Needs react?
 	hasReact: true,
+	// Needs Vue JS?
+	hasVueJS: false,
 	// Whether or not to use the new jsx runtime introduced in React 17
 	// this is opt-in
 	// @see {https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html}

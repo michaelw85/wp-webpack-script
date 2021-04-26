@@ -31,6 +31,7 @@ interface ProjectConfigContext {
 	license: string;
 	outputPath: string;
 	hasReact: 'true' | 'false';
+	hasVueJS: 'true' | 'false';
 	hasFlow: 'true' | 'false';
 	hasTS: 'true' | 'false';
 	hasSass: 'true' | 'false';
@@ -111,6 +112,7 @@ export class Bootstrap {
 				hasFlow: config.hasFlow ? 'true' : 'false',
 				hasLess: config.hasLess ? 'true' : 'false',
 				hasReact: config.hasReact ? 'true' : 'false',
+				hasVueJS: config.hasVueJS ? 'true' : 'false',
 				hasSass: config.hasSass ? 'true' : 'false',
 				hasTS: hasTypeScript(this.cwd)[0] ? 'true' : 'false',
 				license: '',
@@ -206,6 +208,7 @@ export class Bootstrap {
 				type: 'multiselect',
 				choices: [
 					{ title: 'React', value: 'hasReact', selected: true },
+					{ title: 'VueJS', value: 'hasVueJS' },
 					{ title: 'Flowtype', value: 'hasFlow' },
 					{ title: 'Typescript', value: 'hasTS' },
 					{ title: 'Sass/Scss', value: 'hasSass' },
@@ -247,6 +250,7 @@ export class Bootstrap {
 				outputPath: answers.outputPath,
 				hasReact:
 					answers.features.indexOf('hasReact') !== -1 ? 'true' : 'false',
+				hasVueJS: answers.features.indexOf('hasVueJS') !== -1 ? 'true' : 'false',
 				hasFlow: answers.features.indexOf('hasFlow') !== -1 ? 'true' : 'false',
 				hasTS: answers.features.indexOf('hasTS') !== -1 ? 'true' : 'false',
 				hasSass: answers.features.indexOf('hasSass') !== -1 ? 'true' : 'false',

@@ -184,6 +184,8 @@ module.exports = {
 	// Project specific config
 	// Needs react?
 	hasReact: true,
+	// Needs Vue JS?
+	hasVueJS: false,	
 	// Needs sass?
 	hasSass: true,
 	// Needs less?

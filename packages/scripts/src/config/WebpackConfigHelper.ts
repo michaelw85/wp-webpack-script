@@ -29,6 +29,7 @@ import {
 	getStyleLoaderUses,
 } from './loaderHelpers';
 import { hasTypeScript } from '../dev-utils/ops';
+import { VueLoaderPlugin } from 'vue-loader';
 
 interface NormalizedEntry {
 	[x: string]: string[];
@@ -43,6 +44,7 @@ export interface WebpackConfigHelperConfig {
 	outputPath: ProjectConfig['outputPath'];
 	useBabelConfig: ProjectConfig['useBabelConfig'];
 	hasReact: ProjectConfig['hasReact'];
+	hasVueJS: ProjectConfig['hasVueJS'];
 	useReactJsxRuntime: ProjectConfig['useReactJsxRuntime'];
 	disableReactRefresh: ProjectConfig['disableReactRefresh'];
 	hasSass: ProjectConfig['hasSass'];
@@ -359,6 +361,10 @@ export class WebpackConfigHelper {
 					})
 				);
 			}
+
+			if (this.config.hasVueJS) {
+				plugins.push(new VueLoaderPlugin());
+			}
 		} else {
 			// Add Production specific plugins
 			const { bannerConfig } = this.config;
@@ -402,6 +408,14 @@ ${bannerConfig.copyrightText}${bannerConfig.credit ? creditNote : ''}`,
 			useReactJsxRuntime:
 				this.config.useReactJsxRuntime && !this.file.optimizeForGutenberg,
 		};
+
+		if (this.config.hasVueJS) {
+			wpackioBabelOptions.presets = ['babel-preset-typescript-vue'];
+			wpackioBabelOptions.plugins = [
+				['@babel/proposal-decorators', { legacy: true }],
+				['@babel/proposal-class-properties', { loose: true }],
+			];
+		}
 
 		// check if babel.config.js is present
 		const isBabelConfigPresent = this.config.useBabelConfig;
@@ -452,6 +466,23 @@ ${bannerConfig.copyrightText}${bannerConfig.credit ? creditNote : ''}`,
 			],
 			exclude: /(node_modules|bower_components)/,
 		};
+
+		const VueRules: webpack.RuleSetRule[] = [
+			{
+				test: /\.vue$/,
+				loader: 'vue-loader',
+				options: {
+					esModule: true,
+				},
+			},
+			{
+				test: /\.ts$/,
+				loader: 'ts-loader',
+				options: {
+					appendTsSuffixTo: [/\.vue$/],
+				},
+			},
+		];
 
 		// create the babel rules for typescript code
 		const tsPresets: babelPreset[] = getBabelPresets(
@@ -581,6 +612,7 @@ ${bannerConfig.copyrightText}${bannerConfig.credit ? creditNote : ''}`,
 			rules: [
 				jsRules,
 				tsRules,
+				...(this.config.hasVueJS ? VueRules : []),
 				nmJsRules,
 				...styleRules,
 				fileRulesNonStyle,
@@ -593,9 +625,20 @@ ${bannerConfig.copyrightText}${bannerConfig.credit ? creditNote : ''}`,
 	 * Get webpack compatible resolve property.
 	 */
 	public getResolve(): webpack.Resolve {
+		let baseAlias = {};
+
+		if (this.config.hasVueJS) {
+			baseAlias = {
+				vue$: 'vue/dist/vue.esm.js',
+			};
+		}
+
 		return {
 			extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx'],
-			alias: this.config.alias !== undefined ? { ...this.config.alias } : {},
+			alias:
+				this.config.alias !== undefined
+					? { ...baseAlias, ...this.config.alias }
+					: baseAlias,
 		};
 	}
 

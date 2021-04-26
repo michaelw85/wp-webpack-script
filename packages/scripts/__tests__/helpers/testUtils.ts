@@ -53,6 +53,7 @@ export function getConfigFromProjectAndServer(
 		port: sCfg.port,
 		outputPath: pCfg.outputPath,
 		hasReact: pCfg.hasReact,
+		hasVueJS: pCfg.hasVueJS,
 		disableReactRefresh: pCfg.disableReactRefresh,
 		hasSass: pCfg.hasSass,
 		hasLess: pCfg.hasLess,
